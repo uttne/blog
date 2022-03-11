@@ -8,6 +8,7 @@ markdown = "*"
 google-api-python-client = "*"
 google-auth-httplib2 = "*"
 google-auth-oauthlib = "*"
+pygments = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -1,4 +1,6 @@
 import markdown
+from markdown.extensions.codehilite import CodeHiliteExtension
+from markdown.extensions.fenced_code import FencedCodeExtension
 import glob
 import os
 
@@ -27,7 +29,8 @@ class BlogManager(ManagerBase):
 
     def _convert_to_html(self, md_content: str) -> str:
         hash = self._calc_hash(md_content)
-        html = markdown.markdown(md_content)
+        html = markdown.Markdown(
+            extensions=[FencedCodeExtension(), CodeHiliteExtension()]).convert(md_content)
         result = """\
 <!--
 blog-meta-data

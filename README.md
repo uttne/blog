@@ -2,12 +2,22 @@
 
 ## Usage
 
-```powershell
+```bash
 pipenv install --dev
 ```
 
-```powershell
+```bash
 py -m blog
+```
+
+## style
+
+コードハイライトを使用するために Python-Markdown の [Fenced Code Blocks](https://python-markdown.github.io/extensions/fenced_code_blocks/) と [CodeHilite](https://python-markdown.github.io/extensions/code_hilite/index.html) を使用する。
+
+CodeHilite で使用する css は以下の出力することができるので Blogger のテーマを編集してこの css を head に書き込む。
+
+```bash
+py -m pygments -S default -f html -a .codehilite > styles.css
 ```
 
 ## API リファレンス

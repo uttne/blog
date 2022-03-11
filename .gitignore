@@ -154,3 +154,4 @@ cython_debug/
 client_secret*
 *.pickle
 ___*.py
+styles.css
