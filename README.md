@@ -7,7 +7,7 @@ pipenv install --dev
 ```
 
 ```powershell
-py .\main.py
+py -m blog
 ```
 
 ## API リファレンス
