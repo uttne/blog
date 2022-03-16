@@ -30,8 +30,7 @@ class BlogManager(ManagerBase):
         files = glob.glob(postGlobPattern)
         return files
 
-    def _convert_to_html(self, md_content: str) -> str:
-        hash = self._calc_hash(md_content)
+    def _convert_to_html(self, md_content: str, hash: str) -> str:
         html = markdown.Markdown(
             extensions=[FencedCodeExtension(), CodeHiliteExtension()]).convert(md_content)
         result = """\
@@ -128,9 +127,12 @@ hash: {hash}
             if state == PostCheckKind.NO_CHANGE:
                 continue
 
+            # 読み込んだ Markdown の生のテキストのハッシュを計算する
             md_content = self._get_text_content(file)
+            hash = self._calc_hash(md_content)
+
             new_md_content = self._convert_image_url(file, md_content)
-            html_content = self._convert_to_html(new_md_content)
+            html_content = self._convert_to_html(new_md_content, hash)
             metadata = self._get_metadata(html_content)
 
             title = metadata.title
