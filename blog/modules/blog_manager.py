@@ -1,8 +1,11 @@
 import markdown
 from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.fenced_code import FencedCodeExtension
+from git import Git
 import glob
 import os
+import re
+import pathlib
 
 from .post_html_parser import PostHTMLParser
 from .manager_base import ManagerBase
@@ -27,8 +30,7 @@ class BlogManager(ManagerBase):
         files = glob.glob(postGlobPattern)
         return files
 
-    def _convert_to_html(self, md_content: str) -> str:
-        hash = self._calc_hash(md_content)
+    def _convert_to_html(self, md_content: str, hash: str) -> str:
         html = markdown.Markdown(
             extensions=[FencedCodeExtension(), CodeHiliteExtension()]).convert(md_content)
         result = """\
@@ -56,6 +58,61 @@ hash: {hash}
         blogId: str = blog["id"]
         return blogId
 
+    def _convert_image_url(self, file: str, md_content: str) -> str:
+        dirName = os.path.dirname(file)
+        g = Git(dirName)
+
+        try:
+            gitTopLevelDir: str = g.rev_parse("--show-toplevel")
+            remoteUrl: str = g.config("--get", "remote.origin.url")
+        except:
+            raise("'dirName' は git レポジトリではありません")
+
+        baseRemoteUrl = ""
+        isGitHub = False
+        urlMatch = re.search(r'https://(.+?)/', remoteUrl)
+        if urlMatch:
+            host = urlMatch.group(1)
+            if host == "github.com":
+                isGitHub = True
+                # 後ろに / はつかない
+                baseRemoteUrl = remoteUrl.rsplit(".", 1)[0].replace(
+                    "github.com", "raw.githubusercontent.com")
+
+        newContent = ""
+        index = 0
+        matchs = re.finditer(r'!\[.*?\]\((.+?)\)', md_content)
+        for m in matchs:
+            urlSpan = m.span(1)
+            imageUrl: str = m.group(1)
+
+            newContent += md_content[index:urlSpan[0]]
+
+            newUrl = ""
+            if isGitHub and imageUrl.startswith("."):
+                filePath = imageUrl
+                absFilePath = os.path.abspath(os.path.join(dirName, filePath))
+                commitHash = g.log("-1", "--pretty=%H", "--", filePath)
+                if(not commitHash):
+                    raise("'{}' はコミットされていません".format(absFilePath))
+
+                p = pathlib.Path(absFilePath)
+                # 頭に / はつかない画像の相対パスを取得する
+                relativePath = str(p.relative_to(
+                    gitTopLevelDir)).replace("\\", "/")
+
+                newUrl = baseRemoteUrl + "/" + commitHash + "/" + relativePath
+            else:
+                newUrl = imageUrl
+
+            newContent += newUrl
+
+            index = urlSpan[1]
+
+        newContent += md_content[index:]
+
+        return newContent
+
     def run(self):
         blogger = self._blogger
         postManager = self._postManager
@@ -70,8 +127,12 @@ hash: {hash}
             if state == PostCheckKind.NO_CHANGE:
                 continue
 
+            # 読み込んだ Markdown の生のテキストのハッシュを計算する
             md_content = self._get_text_content(file)
-            html_content = self._convert_to_html(md_content)
+            hash = self._calc_hash(md_content)
+
+            new_md_content = self._convert_image_url(file, md_content)
+            html_content = self._convert_to_html(new_md_content, hash)
             metadata = self._get_metadata(html_content)
 
             title = metadata.title
