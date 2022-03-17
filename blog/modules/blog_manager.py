@@ -1,6 +1,7 @@
 import markdown
 from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.fenced_code import FencedCodeExtension
+from markdown.extensions.tables import TableExtension
 from git import Git
 import glob
 import os
@@ -37,7 +38,7 @@ class BlogManager(ManagerBase):
 
     def _convert_to_html(self, md_content: str, hash: str) -> str:
         html = markdown.Markdown(
-            extensions=[FencedCodeExtension(), CodeHiliteExtension()]).convert(md_content)
+            extensions=[FencedCodeExtension(), CodeHiliteExtension(), TableExtension()]).convert(md_content)
         result = """\
 <!--
 blog-meta-data
