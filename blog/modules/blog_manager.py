@@ -30,6 +30,11 @@ class BlogManager(ManagerBase):
         files = glob.glob(postGlobPattern)
         return files
 
+    def _get_new_post_file(self, num: int, filename: list[str]) -> str:
+        file = "-".join(filename)
+        mdFileName = "{}-{}.md".format(str(num).zfill(5), file)
+        return os.path.join("./posts/", mdFileName)
+
     def _convert_to_html(self, md_content: str, hash: str) -> str:
         html = markdown.Markdown(
             extensions=[FencedCodeExtension(), CodeHiliteExtension()]).convert(md_content)
@@ -157,3 +162,25 @@ hash: {hash}
 
                 postManager.update(file, metadata.hash, postId)
                 print("\tUPDATE SUCCESS")
+
+    def new(self, filename: list[str], title: str, tags: list[str]) -> str:
+
+        postManager = self._postManager
+        files = self._get_post_files()
+
+        nums = sorted([int(postManager.get_num_key(f)) for f in files])
+        newNum = 1 if 0 == len(nums) else (nums[-1] + 1)
+
+        file = self._get_new_post_file(newNum, filename)
+
+        content = """\
+<!--
+blog-meta-data
+title: {}
+tags: {}
+-->
+""".format(title, ",".join(tags))
+
+        with open(file, mode="w", encoding="utf-8") as f:
+            f.write(content)
+        print("'{}' を作成しました".format(file))
