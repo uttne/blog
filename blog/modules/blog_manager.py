@@ -113,7 +113,10 @@ hash: {hash}
 
         return newContent
 
-    def run(self):
+    def run(self, dry: bool = False):
+        if dry:
+            print("dry run")
+
         blogger = self._blogger
         postManager = self._postManager
 
@@ -124,6 +127,9 @@ hash: {hash}
             state = postManager.check(file)
             print("{file} : {state}".format(file=os.path.basename(
                 file), state=str(state).split(".")[-1]))
+
+            if dry:
+                continue
             if state == PostCheckKind.NO_CHANGE:
                 continue
 
