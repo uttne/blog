@@ -28,7 +28,7 @@ class PostManager(ManagerBase):
         with open(postManagementFile, "w", encoding="utf-8") as f:
             f.write(contentJson)
 
-    def _getNumKey(self, file: str) -> str:
+    def get_num_key(self, file: str) -> str:
         fileName: str = os.path.basename(file)
 
         numStr = fileName.split("-", 1)[0]
@@ -37,7 +37,7 @@ class PostManager(ManagerBase):
 
     def check(self, file: str) -> PostCheckKind:
 
-        numKey = self._getNumKey(file)
+        numKey = self.get_num_key(file)
 
         posts = self._load()
         post = posts.get(numKey)
@@ -56,7 +56,7 @@ class PostManager(ManagerBase):
 
     def get_post_id(self, file: str) -> str:
 
-        numKey = self._getNumKey(file)
+        numKey = self.get_num_key(file)
 
         posts = self._load()
         post = posts.get(numKey)
@@ -64,7 +64,7 @@ class PostManager(ManagerBase):
 
     def update(self, file: str, localHash: str, postId: str) -> None:
 
-        numKey = self._getNumKey(file)
+        numKey = self.get_num_key(file)
         posts = self._load()
 
         posts[numKey] = {"localHash": localHash, "postId": postId}
