@@ -10,6 +10,22 @@
             "request": "launch",
             "module": "blog",
             "justMyCode": true
+        },
+        {
+            "name": "blog new",
+            "type": "python",
+            "request": "launch",
+            "module": "blog",
+            "justMyCode": true,
+            "args": ["new", "-n", "new", "test", "post", "-t", "新しい記事"]
+        },
+        {
+            "name": "blog up",
+            "type": "python",
+            "request": "launch",
+            "module": "blog",
+            "justMyCode": true,
+            "args": ["up"]
         }
     ]
 }
