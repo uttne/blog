@@ -75,3 +75,9 @@ GitHub に画像をアップロードすれば Blogger から参照しても表�
 ## 参考
 
 - [Google Bloggerの画像はどこにあるの？どうやって削除するの？](https://8oclockis.blogspot.com/2020/09/google-blogger.html)
+
+## 追記 2022-03-19
+
+画像の参照方法を GitHub Raw から GitHub Pages に変更した記事を作成しました。
+
+[https://first-step-of-3930.blog.uttne.net/2022/03/css-github-pages.html](https://first-step-of-3930.blog.uttne.net/2022/03/css-github-pages.html)
