@@ -26,6 +26,14 @@
             "module": "blog",
             "justMyCode": true,
             "args": ["up"]
+        },
+        {
+            "name": "blog up --dry",
+            "type": "python",
+            "request": "launch",
+            "module": "blog",
+            "justMyCode": true,
+            "args": ["up", "--dry"]
         }
     ]
 }
