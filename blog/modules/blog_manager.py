@@ -76,14 +76,16 @@ hash: {hash}
 
         baseRemoteUrl = ""
         isGitHub = False
-        urlMatch = re.search(r'https://(.+?)/', remoteUrl)
+        urlMatch = re.search(
+            r'https://github.com/(.+?)/(.+?)[.]git', remoteUrl)
         if urlMatch:
-            host = urlMatch.group(1)
-            if host == "github.com":
-                isGitHub = True
-                # 後ろに / はつかない
-                baseRemoteUrl = remoteUrl.rsplit(".", 1)[0].replace(
-                    "github.com", "raw.githubusercontent.com")
+            user = urlMatch.group(1)
+            repository = urlMatch.group(2)
+
+            # GitHub Pages の URL を生成する
+            baseRemoteUrl = "https://{user}.github.io/{repository}/".format(
+                user=user, repository=repository)
+            isGitHub = True
 
         newContent = ""
         index = 0
@@ -107,7 +109,7 @@ hash: {hash}
                 relativePath = str(p.relative_to(
                     gitTopLevelDir)).replace("\\", "/")
 
-                newUrl = baseRemoteUrl + "/" + commitHash + "/" + relativePath
+                newUrl = baseRemoteUrl + relativePath
             else:
                 newUrl = imageUrl
 
