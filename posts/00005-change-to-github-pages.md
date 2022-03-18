@@ -6,7 +6,7 @@ tags: 雑記,python
 
 この記事は以下の記事の GitHub から画像を参照する話の続きになります。
 
-https://first-step-of-3930.blog.uttne.net/2022/03/blog-post_70.html
+[https://first-step-of-3930.blog.uttne.net/2022/03/blog-post_70.html](https://first-step-of-3930.blog.uttne.net/2022/03/blog-post_70.html)
 
 
 ## GitHub の画像を参照する方法を変更
@@ -63,5 +63,5 @@ https://raw.githubusercontent.com/uttne/blog/3143021a9a16cb5a66b0125fdd6a77e8603
 
 今回の変更は以下の PR になります。
 
-https://github.com/uttne/blog/pull/5
+[https://github.com/uttne/blog/pull/5](https://github.com/uttne/blog/pull/5)
 
