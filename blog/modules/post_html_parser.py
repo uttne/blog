@@ -27,6 +27,9 @@ class PostHTMLParser(HTMLParser):
                         v.strip(' ') for v in value.split(",")] if v != ""]
                 case "hash":
                     self._blogMetadata.hash = value
+                case "draft":
+                    self._blogMetadata.is_draft = \
+                        (value or "").lower() in ["true", "t", "yes", "y", "1"]
 
     def get_blog_metadata(self) -> BlogMetadata:
         return self._blogMetadata

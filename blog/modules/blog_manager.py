@@ -133,13 +133,6 @@ hash: {hash}
         files = self._get_post_files()
         for file in files:
             state = postManager.check(file)
-            print("{file} : {state}".format(file=os.path.basename(
-                file), state=str(state).split(".")[-1]))
-
-            if dry:
-                continue
-            if state == PostCheckKind.NO_CHANGE:
-                continue
 
             # 読み込んだ Markdown の生のテキストのハッシュを計算する
             md_content = self._get_text_content(file)
@@ -151,6 +144,19 @@ hash: {hash}
 
             title = metadata.title
             tags = metadata.tags
+            is_draft = metadata.is_draft
+
+            if state != PostCheckKind.NO_CHANGE and is_draft:
+                state = PostCheckKind.DRAFT
+
+            print("{file} : {state}".format(file=os.path.basename(
+                file), state=str(state).split(".")[-1]))
+            if dry:
+                continue
+            if state == PostCheckKind.NO_CHANGE:
+                continue
+            if state == PostCheckKind.DRAFT:
+                continue
 
             if state == PostCheckKind.NEW:
                 responsPost = blogger.insert(blogId=blogId, title=title,
