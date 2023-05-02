@@ -19,5 +19,5 @@ flake8 = "*"
 python_version = "3.10"
 
 [scripts]
-new = "py -m blog new"
-up = "py -m blog up"
+new = "python -m blog new"
+up = "python -m blog up"
