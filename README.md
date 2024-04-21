@@ -1,5 +1,34 @@
 # ブログ管理
 
+
+## Secret の保存と暗号化について
+
+client_secret.json をそのまま持たなくてもいいように暗号化を実施する。  
+
+1. .env に暗号化のためのパスフレーズを設定
+
+```ini
+# これに暗号化のためのパスフレーズを設定する
+BLOGGER_SECRET_ENCRYPT_PASSPHRASE=
+```
+
+2. Client Secret を保存する
+
+Google Cloud の API とサービスにある認証情報に登録されているクライアントIDを選択し、クライアントシークレットをダウンロードし `client_secret.json` という名前で保存する。
+
+![](readme_img/2024-04-21-22-46-46.png)
+
+3. 暗号化ファイルを作成する
+
+以下を実行する。
+
+```bash
+pipenv run encrypt
+```
+
+これを実行することで `client_secret.json.enc` が作成される。
+
+
 ## Usage
 
 ```bash
@@ -7,7 +36,11 @@ pipenv install --dev
 ```
 
 ```bash
-py -m blog
+# 新しい記事を作成する
+pipenv run new
+
+# 記事をアップロードする
+pipenv run up
 ```
 
 ## style
