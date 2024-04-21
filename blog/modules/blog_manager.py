@@ -20,7 +20,6 @@ class BlogManager(ManagerBase):
     def __init__(self, blogName="3930kmのいっぽめ", postGlobPattern="./posts/*.md") -> None:
         super().__init__()
 
-        self._postHtmlParser = PostHTMLParser()
         self._blogger = Blogger()
         self._postManager = PostManager()
         self._blogName = blogName
@@ -48,9 +47,9 @@ hash: {hash}
         return result
 
     def _get_metadata(self, html_content: str) -> BlogMetadata:
-        _postHtmlParser = self._postHtmlParser
-        _postHtmlParser.feed(html_content)
-        return _postHtmlParser.get_blog_metadata()
+        postHtmlParser = PostHTMLParser()
+        postHtmlParser.feed(html_content)
+        return postHtmlParser.get_blog_metadata()
 
     def _get_blog_id(self) -> str:
         blogger = self._blogger
