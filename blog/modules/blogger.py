@@ -78,10 +78,6 @@ class Blogger:
         service = self._get_authenticated_service()
         result = service.blogs().listByUser(userId="self").execute()
 
-        from pprint import pprint
-
-        pprint(result)
-
         return result["items"]
 
     def insert(self, blogId: str, title: str, content: str, labels: list[str]):
