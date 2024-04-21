@@ -1,5 +1,8 @@
 # ブログ管理
 
+## ブログのURL
+
+[3930kmのいっぽめ(https://first-step-of-3930.blog.uttne.net/)](https://first-step-of-3930.blog.uttne.net/)
 
 ## Secret の保存と暗号化について
 
