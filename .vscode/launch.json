@@ -20,12 +20,12 @@
             "args": ["new", "-n", "new", "test", "post", "-t", "新しい記事"]
         },
         {
-            "name": "blog up",
+            "name": "blog up -d",
             "type": "python",
             "request": "launch",
             "module": "blog",
             "justMyCode": true,
-            "args": ["up"]
+            "args": ["up", "-d"]
         }
     ]
 }
