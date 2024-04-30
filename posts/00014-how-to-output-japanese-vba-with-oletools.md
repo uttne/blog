@@ -62,3 +62,11 @@ for _, _, filename, contents in vba_modules:
 サンプルコードは以下に置いておく。
 
 [GitHub - uttne/how-to-output-japanese-vba-with-oletools](https://github.com/uttne/how-to-output-japanese-vba-with-oletools)
+
+## その他の参考
+
+- [oletools - python tools to analyze OLE and MS Office files | Decalage](https://www.decalage.info/python/oletools)
+- [GitHub - decalage2/oletools: oletools - python tools to analyze MS OLE2 files (Structured Storage, Compound File Binary Format) and MS Office documents, for malware analysis, forensics and debugging.](https://github.com/decalage2/oletools)
+- [olefile](https://pypi.org/project/olefile/)
+- [oletools](https://pypi.org/project/oletools/)
+- [olefile API Reference — olefile 0.47 documentation](https://olefile.readthedocs.io/en/latest/olefile.html)
