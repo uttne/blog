@@ -6,12 +6,18 @@
 
 ## Secret の保存と暗号化について
 
-client_secret.json をそのまま持たなくてもいいように暗号化を実施する。  
+このプログラムを実行する場合は、 `client_secret.json` が必要になる。  
+ただし、ローカルにそのまま `client_secret.json` を保存するとセキュリティ上よくないので暗号化を行い `client_secret.json.enc` を生成し、それを実行時に使用する。  
+以下は `client_secret.json.enc` を作成するための手順となる。  
 
 1. .env に暗号化のためのパスフレーズを設定
 
+`client_secret.json.enc` を生成するためのパスフレーズを指定する。  
+これはローカル環境毎に任意の値を設定する。  
+
 ```ini
 # これに暗号化のためのパスフレーズを設定する
+# またはPCの環境変数に設定をする
 BLOGGER_SECRET_ENCRYPT_PASSPHRASE=
 ```
 
@@ -29,8 +35,8 @@ Google Cloud の API とサービスにある認証情報に登録されてい�
 pipenv run encrypt
 ```
 
-これを実行することで `client_secret.json.enc` が作成される。
-
+これを実行することで `client_secret.json.enc` が作成される。  
+作成後は `client_secret.json` は削除しても問題ない。
 
 ## Usage
 
